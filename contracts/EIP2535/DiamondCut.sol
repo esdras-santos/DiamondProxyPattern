@@ -42,5 +42,16 @@ contract DiamondCut is IDiamondCut{
                 }
             }
         }
+        if(_init == address(0) && _calldata != 0x00){
+            revert();
+        }
+        if(_init != address(0) && _calldata == 0x00){
+            revert();
+        }
+        if(_init != address(0) && _calldata != 0x00){
+            _init.delegatecall(_calldata);
+        }
+        
+        emit DiamondCut(_diamondCut,_init,_calldata);
     }
 }
