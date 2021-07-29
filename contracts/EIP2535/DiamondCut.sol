@@ -11,6 +11,7 @@ contract DiamondCut is IDiamondCut{
         address _init,
         bytes calldata _calldata
     ) external override {
+        Storage.enforceIsContractOwner();
         for (uint facetIndex; facetIndex < _diamondCut.length; facetIndex++){
             if (_diamondCut[facetIndex].action == IDiamondCut.FacetCutAction.Add){
                 addFunction(_diamondCut[facetIndex].facetAddress, _diamondCut[facetIndex].functionSelectors);
